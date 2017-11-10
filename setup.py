@@ -10,7 +10,7 @@ with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as readme:
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
-    name='django-codenerix-transport',
+    name='django-codenerix-transports',
     version=codenerix_transports.__version__,
     packages=["codenerix_transports"],
     include_package_data=True,
