@@ -42,5 +42,7 @@ setup(
     ],
     install_requires=[
         'django-codenerix',
+        'suds-jurko',
+        'django_countries',
     ]
 )

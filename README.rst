@@ -55,3 +55,17 @@ http://www.centrologic.com/contacto/
 .. image:: http://www.centrologic.com/wp-content/uploads/2015/09/logo-centrologic.png
     :target: http://www.centrologic.com
     :alt: Centrologic is supported mainly by Centrologic Computational Logistic Center
+
+*******
+Credits
+*******
+
+Several technologies have been used to build `CODENERIX <http://www.codenerix.com>`_:
+
+=================================== =================== =========================== =========================================================
+Project name                        License             Owner                       Link to project
+=================================== =================== =========================== =========================================================
+Suds                                GNU Lesser GPL      Jurko Gospodnetic           http://bitbucket.org/jurko/suds
+Django Countries                    MIT                 Chris Beaven                https://github.com/SmileyChris/django-countries/
+=================================== =================== =========================== =========================================================
+
