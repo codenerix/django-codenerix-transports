@@ -53,32 +53,32 @@ class TransportRequest(CodenerixModel):
     error_txt = models.TextField(_('Error Text'), blank=True, null=True)
     cancelled = models.BooleanField(_('Cancelled'), blank=False, null=False, default=False)
     notes = models.CharField(_('Notes'), max_length=30, blank=True, null=True)    # Observaciones
-    
+
     # Info
     origin_address = models.CharField(_('Origin Address'), max_length=30, blank=True, null=True)
     origin_country = CountryField(_('Origin Country'), blank=False)
     destination_address = models.CharField(_('Destination Address'), max_length=30, blank=True, null=True)
     destination_country = CountryField(_('Destination Country'), blank=False)
-    
+
     # Debug data
     request = models.TextField(_('Request'), blank=True, null=True)
     answer = models.TextField(_('Answer'), blank=True, null=True)
     request_date = models.DateTimeField(_("Request date"), editable=False, blank=True, null=True)
     answer_date = models.DateTimeField(_("Answer date"), editable=False, blank=True, null=True)
-    
+
     class Meta:
         unique_together = ('ref', 'platform')
-    
+
     def __unicode__(self):
         return u"TransReq({0})_{1}:{2}|{3}:{4}[{5}]".format(self.pk, self.platform, self.protocol, self.ref, self.total, self.order)
-    
+
     def __fields__(self, info):
         fields = []
         fields.append(('ref', _('Reference'), 100))
         fields.append(('platform', _('Platform'), 100))
         fields.append(('protocol', _('Protocol'), 100))
         return fields
-    
+
     def test_packages(self):
         for package in self.packages.all():
             attributes = ['locator']
@@ -90,15 +90,15 @@ class TransportRequest(CodenerixModel):
                 elif check in methods:
                     if type(attr) != type(self.test_packages):
                         raise IOError("I found a pakcage wich doesn't implement TransportBox class properly: {} ('{}' is not a method)".format(package, check))
-        
+
     def query(self):
         # Test for package integrity
         self.test_packages()
-        
+
         # Get config
         meta = settings.PAYMENTS.get('meta', {})
         config = settings.TRANSPORTS.get(self.platform, {})
-        
+
         # Autoset environment
         self.real = meta.get('real', False)
         # Autoset protocol
@@ -130,7 +130,7 @@ class TransportRequest(CodenerixModel):
                 raise TransportError((2, "Wrong environment: this transaction is for '{}' environment and system is set to '{}'".format(envself, envsys)))
         else:
             raise TransportError((3, "Platform '{}' not configured in your system".format(self.platform)))
-    
+
     def __query_mrw(self, meta, config):
         # Set endpoint
         if self.real:
@@ -138,10 +138,10 @@ class TransportRequest(CodenerixModel):
             raise IOError("No endpoint defined for MRW REAL")
         else:
             endpoint = 'http://sagec-test.mrw.es/MRWEnvio.asmx?WSDL'
-        
+
         # Build the SOAP instance
         client = Client(endpoint)
-        
+
         # Authentication
         auth = client.factory.create('AuthInfo')
         auth["CodigoFranquicia"] = config.get('franchise', None)
@@ -149,7 +149,7 @@ class TransportRequest(CodenerixModel):
         auth['CodigoDepartamento'] = config.get('department', None)
         auth['UserName'] = config.get('username', None)
         auth['Password'] = config.get('password', None)
-        
+
         # Request
         datas = client.factory.create('TransmEnvioRequest')
         datas["DatosEntrega"]["Direccion"]["CodigoTipoVia"] = 'CL'
@@ -165,7 +165,7 @@ class TransportRequest(CodenerixModel):
         datas["DatosEntrega"]["ALaAtencionDe"] = '12345678z'
         datas["DatosEntrega"]["Horario"] = ['03:30', '22:22']
         datas["DatosEntrega"]["Observaciones"] = 'opcional'
-        
+
         datas["DatosServicio"]["Fecha"] = '02/02/2002'
         datas["DatosServicio"]["Referencia"] = 123
         datas["DatosServicio"]["EnFranquicia"] = 'N'
@@ -189,7 +189,7 @@ class TransportRequest(CodenerixModel):
         datas["DatosServicio"]["ValorDeclarado"] = 123.34
         datas["DatosServicio"]["Notificaciones"] = [1, 2, 'jsoler@centrologic.com']  # CanalNotificacion, TipoNotificacion, MailSMS
         # datas["DatosServicio"]["SeguroOpcional"]=  #opcional
-        
+
         # Send the request
         try:
             client.set_options(soapheaders=auth)
@@ -197,9 +197,9 @@ class TransportRequest(CodenerixModel):
         except WebFault as e:
             print(e)
             raise
-        
+
         print("TransmEnvio: {}".format(m))
-    
+
     def __query_seur(self, meta, config):
         # Default config
         config = {
@@ -222,11 +222,11 @@ class TransportBox(CodenerixModel):
     return u"{0}:{1}Lx{2}Wx{3}H-{4}".format(self.locator, self.length, self.width, self.height, self.weight)
     '''
     locator = models.PositiveIntegerField(_('Locator'), blank=False, null=False, validators=[MaxValueValidator(2821109907455)])  # 2821109907455 => codenerix::hex36 = 8 char
-    transport = models.ForeignKey(TransportRequest, blank=False, null=True, default=None)
-    
+    transport = models.ForeignKey(TransportRequest, blank=False, null=True, default=None, on_delete=models.CASCADE)
+
     class Meta:
         abstract = True
-    
+
     def length(self):
         raise TransportError("Method length not defined!")
 
