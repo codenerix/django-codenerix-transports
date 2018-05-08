@@ -18,7 +18,7 @@ setup(
     license='Apache License Version 2.0',
     description='Codenerix Transports is a module that enables CODENERIX to manage transports and let clients to request transport of packages with kwnown companies.',
     long_description=README,
-    url='https://github.com/centrologic/django-codenerix-transports',
+    url='https://github.com/codenerix/django-codenerix-transports',
     author=", ".join(codenerix_transports.__authors__),
     keywords=['django', 'codenerix', 'management', 'erp', 'crm', 'transports', ],
     platforms=['OS Independent'],
