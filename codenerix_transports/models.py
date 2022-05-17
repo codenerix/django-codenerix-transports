@@ -2,7 +2,7 @@
 #
 # django-codenerix-transports
 #
-# Copyright 2017 Centrologic Computational Logistic Center S.L.
+# Codenerix GNU
 #
 # Project URL : http://www.codenerix.com
 #
@@ -21,7 +21,7 @@
 from suds.client import Client
 
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.core.validators import MaxValueValidator
 from django_countries.fields import CountryField
 from django.conf import settings
@@ -187,7 +187,7 @@ class TransportRequest(CodenerixModel):
         # datas["DatosServicio"]["ImporteReembolso"] = 'N' # para envios con reembolso
         datas["DatosServicio"]["TipoMercancia"] = 'ATV'  # opcional
         datas["DatosServicio"]["ValorDeclarado"] = 123.34
-        datas["DatosServicio"]["Notificaciones"] = [1, 2, 'jsoler@centrologic.com']  # CanalNotificacion, TipoNotificacion, MailSMS
+        datas["DatosServicio"]["Notificaciones"] = [1, 2, 'noreply@codenerix.com']  # CanalNotificacion, TipoNotificacion, MailSMS
         # datas["DatosServicio"]["SeguroOpcional"]=  #opcional
 
         # Send the request
