@@ -2,7 +2,7 @@
 #
 # django-codenerix-transports
 #
-# Copyright 2017 Centrologic Computational Logistic Center S.L.
+# Codenerix GNU
 #
 # Project URL : http://www.codenerix.com
 #
@@ -187,7 +187,7 @@ class TransportRequest(CodenerixModel):
         # datas["DatosServicio"]["ImporteReembolso"] = 'N' # para envios con reembolso
         datas["DatosServicio"]["TipoMercancia"] = 'ATV'  # opcional
         datas["DatosServicio"]["ValorDeclarado"] = 123.34
-        datas["DatosServicio"]["Notificaciones"] = [1, 2, 'jsoler@centrologic.com']  # CanalNotificacion, TipoNotificacion, MailSMS
+        datas["DatosServicio"]["Notificaciones"] = [1, 2, 'soleronline@gmail.com']  # CanalNotificacion, TipoNotificacion, MailSMS
         # datas["DatosServicio"]["SeguroOpcional"]=  #opcional
 
         # Send the request
