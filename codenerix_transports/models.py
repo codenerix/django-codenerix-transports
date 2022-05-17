@@ -187,7 +187,7 @@ class TransportRequest(CodenerixModel):
         # datas["DatosServicio"]["ImporteReembolso"] = 'N' # para envios con reembolso
         datas["DatosServicio"]["TipoMercancia"] = 'ATV'  # opcional
         datas["DatosServicio"]["ValorDeclarado"] = 123.34
-        datas["DatosServicio"]["Notificaciones"] = [1, 2, 'soleronline@gmail.com']  # CanalNotificacion, TipoNotificacion, MailSMS
+        datas["DatosServicio"]["Notificaciones"] = [1, 2, 'noreply@codenerix.com']  # CanalNotificacion, TipoNotificacion, MailSMS
         # datas["DatosServicio"]["SeguroOpcional"]=  #opcional
 
         # Send the request
